@@ -26,6 +26,7 @@
         <com.alibaba.fastjson>1.2.13</com.alibaba.fastjson>
         <pagehelper.version>4.1.6</pagehelper.version>
         <feign.version>8.18.0</feign.version>
+        <servlet.api>6.0.37</servlet.api>
     </properties>
 
     <dependencies>
@@ -38,9 +39,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${servlet.api}</version>
         </dependency>
         <!--mysql-->
         <dependency>
@@ -59,6 +72,7 @@
         <dependency>
             <groupId>net.sf.json-lib</groupId>
             <artifactId>json-lib</artifactId>
+            <version>2.4</version>
             <classifier>jdk15</classifier>
         </dependency>
 
