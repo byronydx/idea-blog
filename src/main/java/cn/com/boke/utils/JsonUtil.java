@@ -1,4 +1,4 @@
-package cn.com.ydxboke.utils;
+package cn.com.boke.utils;
 
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.core.type.TypeReference;

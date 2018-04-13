@@ -1,4 +1,4 @@
-package cn.com.ydxboke.domain;
+package cn.com.boke.domain;
 
 import lombok.Data;
 
@@ -10,7 +10,7 @@ public class User {
      * ID
      */
     @Id
-    @SequenceGenerator(name="",sequenceName="SELECT LAST_INSERT_ID()")
+    @GeneratedValue(generator = "UUID")
     private String id;
 
     /**

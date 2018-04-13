@@ -1,10 +1,12 @@
-package cn.com.ydxboke.domain;
+package cn.com.boke.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.Date;
 
@@ -15,7 +17,7 @@ public class LoginTicket {
      * ID
      */
     @Id
-    @SequenceGenerator(name="",sequenceName="SELECT LAST_INSERT_ID()")
+    @GeneratedValue(generator = "UUID")
     private String id;
 
     /**
@@ -37,5 +39,7 @@ public class LoginTicket {
     /**
      * 过期时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date expired;
 }

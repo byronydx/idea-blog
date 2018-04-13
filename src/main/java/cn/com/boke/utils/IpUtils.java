@@ -1,4 +1,4 @@
-package cn.com.ydxboke.utils;
+package cn.com.boke.utils;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

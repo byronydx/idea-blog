@@ -1,4 +1,4 @@
-package cn.com.ydxboke.utils;/**
+package cn.com.boke.utils;/**
  * Created by IntelliJ IDEA.
  * User: Yangdx.
  * Date: 2017/7/3.

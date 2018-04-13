@@ -1,6 +1,6 @@
-package cn.com.ydxboke.mapper;
+package cn.com.boke.mapper;
 
-import cn.com.ydxboke.domain.LoginTicket;
+import cn.com.boke.domain.LoginTicket;
 import tk.mybatis.mapper.common.Mapper;
 
 public interface LoginTicketMapper extends Mapper<LoginTicket> {

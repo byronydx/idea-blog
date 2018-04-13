@@ -1,11 +1,15 @@
-package cn.com.ydxboke.utils;
+package cn.com.boke.utils;
 
+import net.sf.json.JSONObject;
 import org.apache.commons.lang3.math.NumberUtils;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 日期处理工具类
@@ -623,7 +627,7 @@ public class DateUtils {
      * @return list
      * @throws ParseException
      */
-    /*public static List<Date> jsonToDate(String taskData) throws ParseException {
+    public static List<Date> jsonToDate(String taskData) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(DateFormatType.TYPE1.type);
         JSONObject jsonData = JSONObject.fromObject(taskData);
         String startTime = (String) jsonData.get("startTime");
@@ -634,7 +638,7 @@ public class DateUtils {
         listDate.add(startT);
         listDate.add(endT);
         return listDate;
-    }*/
+    }
 
     /**
      * 按指定规则进行日期比较，只要格式化后的字符串相等则认为日期相等
