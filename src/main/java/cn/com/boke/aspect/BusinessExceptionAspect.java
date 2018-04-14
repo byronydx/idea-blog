@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 public class BusinessExceptionAspect {
     private Logger logger = LoggerFactory.getLogger(BusinessExceptionAspect.class);
 
-    @Pointcut("execution(* cn.com.boke.web.controller.rest.*.*(..))")
+    @Pointcut("execution(* cn.com.boke.service.*.*(..))")
     public void businessLogAnnotationPointcut() {
 
     }
@@ -31,19 +31,19 @@ public class BusinessExceptionAspect {
     public void methodsAnnotatedWithBusinessLog(JoinPoint joinPoint,Exception exception) {
         if (exception instanceof BusinessException) {
             logger.error("==>cn.ocm.boke.exception.BusinessException");
-            logger.error("==>errCode:" + ((BusinessException) exception).getCode() + " errMsg:" + exception.getMessage());
-            logger.error("==>" + exception.fillInStackTrace());
+            logger.error("==>异常码:" + ((BusinessException) exception).getCode() + " 异常信息:" + exception.getMessage());
+            logger.error("==>异常提示：" + exception.fillInStackTrace());
         } else {
             logger.error("==>cn.ocm.boke.exception.Exception");
 
-            logger.error("==>Error class: " + joinPoint.getTarget().getClass().getName());
-            logger.error("==>Error method: " + joinPoint.getSignature().getName());
+            logger.error("==>异常类: " + joinPoint.getTarget().getClass().getName());
+            logger.error("==>异常方法: " + joinPoint.getSignature().getName());
 
             for (int i = 0; i < joinPoint.getArgs().length; i++) {
-                logger.error("==>args[" + i + "]: " + joinPoint.getArgs()[i]);
+                logger.error("==>参数[" + i + "]: " + joinPoint.getArgs()[i]);
             }
 
-            logger.error("==>Exception class: " + exception.getClass().getName());
+            logger.error("==>异常类型: " + exception.getClass().getName());
             logger.error("==>" + exception.fillInStackTrace());
             logger.error("==> 堆栈信息{}", exception.toString(), exception);
         }
