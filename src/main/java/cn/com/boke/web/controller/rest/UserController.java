@@ -9,21 +9,18 @@ package cn.com.boke.web.controller.rest;/**
 import cn.com.boke.domain.User;
 import cn.com.boke.exception.BusinessException;
 import cn.com.boke.service.UserService;
-import cn.com.boke.wrap.WrapMapper;
-import cn.com.boke.wrap.Wrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 产品分类请求
@@ -31,7 +28,7 @@ import javax.annotation.Resource;
  * @author yangdx
  * @create 2017-04-13 11:57
  **/
-@Controller
+@RestController
 @RequestMapping(
         value = {"/page/boke/user"},
         produces = {"application/json;charset=UTF-8"}
@@ -47,31 +44,37 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @RequestMapping(
-            value = {"/register"},
-            method = {RequestMethod.POST}
-    )
+    @RequestMapping(value = {"/register"}, method = {RequestMethod.POST})
     @ResponseBody
-    @ApiOperation(
-            notes = "用户注册",
-            httpMethod = "POST",
-            value = "用户注册"
-    )
-    public Wrapper<?> register(@ApiParam(name = "username", value = "用户名") @RequestParam String username,
-                               @ApiParam(name = "password", value = "密码") @RequestParam String password) {
-        this.logger.info("==>vue用户注册开始。参数：{}", username, password);
+    @ApiOperation(notes = "用户注册", httpMethod = "POST", value = "用户注册")
+    public String register(@ApiParam(name = "user", value = "用户") @ModelAttribute(value = "user") User user,
+                           HttpServletResponse httpResponse, String next, Model model) {
+        this.logger.info("==>vue用户注册开始。参数：{}", user);
+        String username = user.getName();
+        String password = user.getPassword();
         String info = checkParameter(username, password);
-        if (info != null) return WrapMapper.wrap(500, info);
+        if (info != null) return info;
         String ticket;
         try {
             ticket = userService.register(username, password);
+            if (StringUtils.isNotBlank(ticket)) {
+                Cookie cookie = new Cookie("ticket", ticket);
+                cookie.setPath("/");
+                httpResponse.addCookie(cookie);
+                if (StringUtils.isNotBlank(next))
+                    return "redirect:"+next;
+                else
+                return "redirect:/";
+            } else {
+                model.addAttribute("msg","ticket为空");
+                return "login";
+            }
         } catch (BusinessException var3) {
-            return WrapMapper.wrap(500, var3.getMessage());
+            return "login";
         } catch (Exception var4) {
             this.logger.error("用户注册, 出现异常={}", var4.getMessage(), var4);
-            return WrapMapper.error();
+            return "login";
         }
-        return WrapMapper.wrap(200, "用户注册成功", ticket);
     }
 
     private String checkParameter(String username, String password) {

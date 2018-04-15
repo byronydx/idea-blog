@@ -64,11 +64,11 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
         return addLoginTicket(user);
     }
 
-    public String addLoginTicket(User user){
+    public String addLoginTicket(User user) {
         LoginTicket loginTicket = new LoginTicket();
         loginTicket.setUserId(user.getId());
         Date date = new Date();
-        date.setTime(date.getTime()+1000*3600*30);
+        date.setTime(date.getTime() + 1000 * 3600 * 30);
         loginTicket.setExpired(date);
         loginTicket.setStatus("0");
         String userToString;
@@ -78,9 +78,10 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
         try {
             userToString = JacksonUtil.toJson(user);
             //将用户信息放入Token
-            loginTicket.setTicket(Jwts.builder().setSubject(user.getName()).claim("User", userToString).setIssuedAt(nowDate.toDate()).setExpiration(laterDate.toDate()).signWith(SignatureAlgorithm.HS256, tokenKey).compact());
+            String ticket = Jwts.builder().setSubject(user.getName()).claim("User", userToString).setIssuedAt(nowDate.toDate()).setExpiration(laterDate.toDate()).signWith(SignatureAlgorithm.HS256, tokenKey).compact();
+            loginTicket.setTicket(ticket);
             loginTicketService.save(loginTicket);
-            return loginTicket.getTicket();
+            return ticket;
         } catch (Exception e) {
             e.printStackTrace();
             throw new BusinessException("用户注册失败");
