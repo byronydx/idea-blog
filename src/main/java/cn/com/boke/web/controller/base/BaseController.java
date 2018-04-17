@@ -9,6 +9,11 @@
 package cn.com.boke.web.controller.base;
 
 import cn.com.boke.config.RestConfig;
+import cn.com.boke.exception.BusinessException;
+import cn.com.boke.model.constant.Constant;
+import cn.com.boke.model.dto.AuthResDto;
+import cn.com.boke.utils.PublicUtil;
+import cn.com.boke.utils.ThreadLocalMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
@@ -30,19 +35,14 @@ public class BaseController {
     RestConfig restConfig;
 
     public void setDefaultModel(Model model) {
-		model.addAttribute("UAM", restConfig.getUamUrl());
-		model.addAttribute("OFC", restConfig.getOfcUrl());
-		model.addAttribute("CSC", restConfig.getCscWebUrl());
-		model.addAttribute("AC", restConfig.getAcUrl());
     }
 
-    /*protected AuthResDto getAuthResDtoByToken() {
-        AuthResDto authResDto = (AuthResDto) ThreadLocalMap.get(UamConstant.TOKEN_AUTH_DTO);
-
+    protected AuthResDto getAuthResDtoByToken() {
+        AuthResDto authResDto = (AuthResDto) ThreadLocalMap.get(Constant.TOKEN_AUTH_DTO);
         if (PublicUtil.isEmpty(authResDto)) {
             throw new BusinessException("验证token失败");
         }
         return authResDto;
-    }*/
+    }
 }
   

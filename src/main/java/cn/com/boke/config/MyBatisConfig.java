@@ -24,13 +24,13 @@ import java.util.Properties;
 public class MyBatisConfig {
 
     @Bean
-    @ConfigurationProperties(prefix="spring.datasource")
-    public org.apache.tomcat.jdbc.pool.DataSource dataSource(){
+    @ConfigurationProperties(prefix = "spring.datasource")
+    public org.apache.tomcat.jdbc.pool.DataSource dataSource() {
         return new org.apache.tomcat.jdbc.pool.DataSource();
     }
 
     @Bean
-    public SqlSessionFactory sqlSessionFactoryBean() throws Exception{
+    public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource());
         sqlSessionFactoryBean.setTypeAliasesPackage("cn.com.boke.domain");
@@ -39,12 +39,12 @@ public class MyBatisConfig {
         //分页插件
         PageHelper pageHelper = new PageHelper();
         Properties properties = new Properties();
-        properties.setProperty("offsetAsPageNum","true");
-        properties.setProperty("rowBoundsWithCount","true");
-        properties.setProperty("reasonable","true");
-        properties.setProperty("supportMethodsArguments","true");
-        properties.setProperty("returnPageInfo","check");
-        properties.setProperty("params","count=countSql");
+        properties.setProperty("offsetAsPageNum", "true");
+        properties.setProperty("rowBoundsWithCount", "true");
+        properties.setProperty("reasonable", "true");
+        properties.setProperty("supportMethodsArguments", "true");
+        properties.setProperty("returnPageInfo", "check");
+        properties.setProperty("params", "count=countSql");
         pageHelper.setProperties(properties);
         //添加插件
         sqlSessionFactoryBean.setPlugins(new Interceptor[]{pageHelper});
@@ -55,7 +55,7 @@ public class MyBatisConfig {
 
     //加载事务管理器
     @Bean
-    public PlatformTransactionManager transactionManager(){
+    public PlatformTransactionManager transactionManager() {
         return new DataSourceTransactionManager(dataSource());
     }
 

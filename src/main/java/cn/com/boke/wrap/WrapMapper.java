@@ -3,14 +3,13 @@ package cn.com.boke.wrap;
 import com.github.pagehelper.Page;
 
 /**
- * 
  * <p>Title:	  WrapMapper </p>
  * <p>Description 包装辅助类. </p>
  * <p>Company:    http://www.hnxianyi.com  </p>
- * @Author        <a href="liu_zhaoming@sina.cn"/>刘兆明</a>
- * @CreateDate    2016年10月6日 下午12:47:24 <br/>
- * @version       
- * @since         JDK 1.7
+ *
+ * @Author <a href="liu_zhaoming@sina.cn"/>刘兆明</a>
+ * @CreateDate 2016年10月6日 下午12:47:24 <br/>
+ * @since JDK 1.7
  */
 public class WrapMapper {
 
@@ -23,14 +22,10 @@ public class WrapMapper {
     /**
      * Wrap.
      *
-     * @param <E>
-     *            the element type
-     * @param code
-     *            the code
-     * @param message
-     *            the message
-     * @param o
-     *            the o
+     * @param <E>     the element type
+     * @param code    the code
+     * @param message the message
+     * @param o       the o
      * @return the wrapper
      */
     public static <E> Wrapper<E> wrap(int code, String message, E o, Page<E> page) {
@@ -40,14 +35,10 @@ public class WrapMapper {
     /**
      * Wrap.
      *
-     * @param <E>
-     *            the element type
-     * @param code
-     *            the code
-     * @param message
-     *            the message
-     * @param o
-     *            the o
+     * @param <E>     the element type
+     * @param code    the code
+     * @param message the message
+     * @param o       the o
      * @return the wrapper
      */
     public static <E> Wrapper<E> wrap(int code, String message, E o) {
@@ -57,12 +48,9 @@ public class WrapMapper {
     /**
      * Wrap.
      *
-     * @param <E>
-     *            the element type
-     * @param code
-     *            the code
-     * @param message
-     *            the message
+     * @param <E>     the element type
+     * @param code    the code
+     * @param message the message
      * @return the wrapper
      */
     public static <E> Wrapper<E> wrap(int code, String message) {
@@ -72,10 +60,8 @@ public class WrapMapper {
     /**
      * Wrap.
      *
-     * @param <E>
-     *            the element type
-     * @param code
-     *            the code
+     * @param <E>  the element type
+     * @param code the code
      * @return the wrapper< e>
      */
     public static <E> Wrapper<E> wrap(int code) {
@@ -85,10 +71,8 @@ public class WrapMapper {
     /**
      * Wrap.
      *
-     * @param <E>
-     *            the element type
-     * @param e
-     *            the e
+     * @param <E> the element type
+     * @param e   the e
      * @return the wrapper
      */
     public static <E> Wrapper<E> wrap(Exception e) {
@@ -98,10 +82,8 @@ public class WrapMapper {
     /**
      * Un wrapper.
      *
-     * @param <E>
-     *            the element type
-     * @param wrapper
-     *            the wrapper
+     * @param <E>     the element type
+     * @param wrapper the wrapper
      * @return the e
      */
     public static <E> E unWrap(Wrapper<E> wrapper) {
@@ -111,8 +93,7 @@ public class WrapMapper {
     /**
      * Wrap ERROR. code=100
      *
-     * @param <E>
-     *            the element type
+     * @param <E> the element type
      * @return the wrapper< e>
      */
     public static <E> Wrapper<E> illegalArgument() {
@@ -122,8 +103,7 @@ public class WrapMapper {
     /**
      * Wrap ERROR. code=500
      *
-     * @param <E>
-     *            the element type
+     * @param <E> the element type
      * @return the wrapper< e>
      */
     public static <E> Wrapper<E> error() {
@@ -133,8 +113,7 @@ public class WrapMapper {
     /**
      * Wrap SUCCESS. code=200
      *
-     * @param <E>
-     *            the element type
+     * @param <E> the element type
      * @return the wrapper< e>
      */
     public static <E> Wrapper<E> ok() {

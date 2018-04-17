@@ -22,8 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class JumpLoginController {
 
-    @RequestMapping(value="/login",method=RequestMethod.GET)
-    public ModelAndView tologin(Model model){
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView tologin(Model model) {
         model.addAttribute("user", new User());
         return new ModelAndView("service/login");
     }

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * 产品地址数据请求
  *
- * @author  楊東旭
+ * @author 楊東旭
  * @create 2017-04-13 11:57
  **/
 @Controller
@@ -50,7 +50,7 @@ public class TestController {
             httpMethod = "POST",
             value = "测试接口专用"
     )
-    public Wrapper<?> findAddress(@ApiParam(name = "ProSlaAddressDto",value = "测试接口专用DTO") @RequestBody User user) {
+    public Wrapper<?> findAddress(@ApiParam(name = "ProSlaAddressDto", value = "测试接口专用DTO") @RequestBody User user) {
         this.logger.info("==>测试接口专用。");
         return WrapMapper.wrap(200, "测试接口专用成功");
     }

@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class RestConfig {
 
-    public final static String REST_PREFIX="restful";
+    public final static String REST_PREFIX = "restful";
 
 
     /**
@@ -24,7 +24,7 @@ public class RestConfig {
      * 用户中心UAM地址
      */
     private String uamUrl;
-    
+
     /**
      * 资源中心View调用
      */
@@ -42,18 +42,21 @@ public class RestConfig {
 
     /**
      * 地址库地址
+     *
      * @return
      */
     private String addrUrl;
 
     /**
      * 分拣中心地址
+     *
      * @return
      */
     private String dmsUrl;
 
     /**
      * 运输中心地址
+     *
      * @return
      */
     private String tfcUrl;

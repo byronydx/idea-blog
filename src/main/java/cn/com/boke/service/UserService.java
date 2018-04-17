@@ -11,5 +11,5 @@ import cn.com.boke.domain.User;
  */
 public interface UserService extends IService<User> {
     User selectByName(String name);
-    String register(String username, String password);
+    void register(String username, String password);
 }

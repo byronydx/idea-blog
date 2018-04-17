@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
  * Date: 2017/12/25.
  * Time: 17:59.
  * Tags: Code, we are serious.
+ *
  * @author ydx
  */
 @Aspect
@@ -27,8 +28,8 @@ public class BusinessExceptionAspect {
 
     }
 
-    @AfterThrowing(value  = "businessLogAnnotationPointcut()", throwing = "exception")
-    public void methodsAnnotatedWithBusinessLog(JoinPoint joinPoint,Exception exception) {
+    @AfterThrowing(value = "businessLogAnnotationPointcut()", throwing = "exception")
+    public void methodsAnnotatedWithBusinessLog(JoinPoint joinPoint, Exception exception) {
         if (exception instanceof BusinessException) {
             logger.error("==>cn.ocm.boke.exception.BusinessException");
             logger.error("==>异常码:" + ((BusinessException) exception).getCode() + " 异常信息:" + exception.getMessage());

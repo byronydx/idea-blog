@@ -21,22 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
  **/
 @RestController
 public class JumpRegisterController {
-    @RequestMapping(value="/register",method=RequestMethod.GET)
-    public ModelAndView toRegister(Model model){
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public ModelAndView toRegister(Model model) {
         model.addAttribute("user", new User());
         return new ModelAndView("service/register");
     }
-
-    /*@RequestMapping(value="/page/boke/user/register",method=RequestMethod.POST)
-    public ModelAndView register(@ModelAttribute(value="user") User user, Model model){
-        String url = "service/login";
-        //userService.save(user);
-        *//*if(userService.get(user.getUsername())!=null){
-            model.addAttribute("register_success", "注册成功");
-            url = "service/login";
-        }else{
-            url = "service/register";
-        }*//*
-        return new ModelAndView(url);
-    }*/
 }

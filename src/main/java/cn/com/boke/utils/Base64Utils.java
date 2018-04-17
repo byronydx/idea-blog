@@ -21,22 +21,24 @@ import java.io.OutputStream;
  * @create 2017-07-03 1:36
  **/
 public class Base64Utils {
-    static class BASE64Encoderer extends BASE64Encoder{
+    static class BASE64Encoderer extends BASE64Encoder {
 
     }
-    static class BASE64Dncoderer extends BASE64Decoder{
+
+    static class BASE64Dncoderer extends BASE64Decoder {
 
     }
 
     /**
      * <p>Title:    .Encrypt</p>
      * <p>Description 根据传入的字节数组进行Base64加密 </p>
+     *
      * @param
-     * @author        杨东旭
-     * @CreateDate    2017/07/03
-     * @return       String
+     * @return String
+     * @author 杨东旭
+     * @CreateDate 2017/07/03
      */
-    public static String Encrypt(byte[] pic){
+    public static String Encrypt(byte[] pic) {
         BASE64Encoderer encoder = new BASE64Encoderer();
         return encoder.encode(pic);
     }
@@ -44,12 +46,13 @@ public class Base64Utils {
     /**
      * <p>Title:    .Decrypt</p>
      * <p>Description 根据传入的Bsdr64加密字符串进行Base64解密，并在对应的目录下输出（主要用于图片处理） </p>
-     * @param         path,imagestr
-     * @author        杨东旭
-     * @CreateDate    2017/07/03
-     * @return       void
+     *
+     * @param path,imagestr
+     * @return void
+     * @author 杨东旭
+     * @CreateDate 2017/07/03
      */
-    public static void Decrypt(String path,String imagestr){
+    public static void Decrypt(String path, String imagestr) {
         BASE64Dncoderer decoder = new BASE64Dncoderer();
         try {
             // Base64解码
@@ -73,20 +76,21 @@ public class Base64Utils {
     /**
      * <p>Title:    .Decrypt</p>
      * <p>Description 根据传入的字节数组，在对应的目录下输出（主要用于图片处理） </p>
-     * @param         path,imagestr
-     * @author        杨东旭
-     * @CreateDate    2017/07/03
-     * @return       void
+     *
+     * @param path,imagestr
+     * @return void
+     * @author 杨东旭
+     * @CreateDate 2017/07/03
      */
-    public static void DecryptByByte(String path,byte[] data){
-        if(data.length<3||path.equals("")) return;
-        try{
+    public static void DecryptByByte(String path, byte[] data) {
+        if (data.length < 3 || path.equals("")) return;
+        try {
             FileImageOutputStream imageOutput = new FileImageOutputStream(new File(path));
             //输出图片
             imageOutput.write(data, 0, data.length);
             imageOutput.close();
             System.out.println("Make Picture success,Please find image in " + path);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             System.out.println("Exception: " + ex);
         }
     }

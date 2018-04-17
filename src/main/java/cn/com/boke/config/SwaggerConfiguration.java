@@ -14,23 +14,23 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-@Profile({ "dev", "test" })
+@Profile({"dev", "test"})
 public class SwaggerConfiguration {
-	@Bean
-	public Docket reservationApi() {
-		return (new Docket(DocumentationType.SWAGGER_2))
-				.apiInfo(this.apiInfo())
-				.select()
-				.apis(RequestHandlerSelectors.basePackage("cn.com.boke.web.controller.rest"))
-				.paths(PathSelectors.any())
-				.build();
-	}
+    @Bean
+    public Docket reservationApi() {
+        return (new Docket(DocumentationType.SWAGGER_2))
+                .apiInfo(this.apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("cn.com.boke.web.controller.rest"))
+                .paths(PathSelectors.any())
+                .build();
+    }
 
-	private ApiInfo apiInfo() {
-		String email = "1037735036@qq.com";
-		String name = "ydx";
-		String url = "http:boke.com.cn";
-		Contact contact = new Contact(name, url, email);
-		return new ApiInfoBuilder().title("接口文档").description("博客項目").contact(contact).build();
-	}
+    private ApiInfo apiInfo() {
+        String email = "1037735036@qq.com";
+        String name = "ydx";
+        String url = "http:boke.com.cn";
+        Contact contact = new Contact(name, url, email);
+        return new ApiInfoBuilder().title("接口文档").description("博客項目").contact(contact).build();
+    }
 }

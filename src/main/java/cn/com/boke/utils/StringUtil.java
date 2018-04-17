@@ -12,7 +12,7 @@ import java.util.*;
 
 /**
  * 字符串工具类，继续自 org.apache.commons.lang.StringUtils
- * <p>
+ *
  * <h1>API : <font color="#FF0000">http://commons.apache.org/proper/commons-lang/javadocs/api-release/index.html</font></h1>
  * <p>http://blog.csdn.net/chinarenzhou/article/details/4090499
  */
@@ -201,13 +201,13 @@ public class StringUtil extends StringUtils {
     /**
      * 判断对象中的属性是否都为空
      *
+     * @param obj 对象
      * @return true : 对象中所有数据为空 false: 对象中所有对象不是都为空
      * @Auto : BOBO
-     * @param obj 对象
      */
     public static boolean dtoIsNull(Object obj) throws Exception {
 
-        if(StringUtils.isEmpty(obj)) return true;
+        if (StringUtils.isEmpty(obj)) return true;
 
         for (Field f : obj.getClass().getDeclaredFields()) {
             f.setAccessible(true);
