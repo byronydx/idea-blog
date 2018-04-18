@@ -10,6 +10,9 @@ package cn.com.boke.model.enums;
  * @since JDK 1.7
  */
 public enum ResultCodeEnum {
+    /**
+     * 未知异常
+     */
     GL000500(500, "未知异常"),
     GL000400(400, "参数不合法"),
     GL000403(403, "无权访问"),
@@ -156,8 +159,9 @@ public enum ResultCodeEnum {
     public static int getErrorCode(String code) {
         try {
             for (ResultCodeEnum ele : ResultCodeEnum.values()) {
-                if (code.equals(ele.code()))
+                if (code.equals(ele.code())) {
                     return ele.getCode();
+                }
             }
             return 500;
         } catch (Exception e) {
@@ -165,20 +169,4 @@ public enum ResultCodeEnum {
             return 500;
         }
     }
-
-//    public static void main(String[] args) {
-//
-//
-//        try {
-//            if (true) {
-//               throw new BusinessException(ResultCodeEnum.ES000007.code(), ResultCodeEnum.ES000007.msg());
-//            }
-//
-//            System.out.println(ResultCodeEnum.ES000007.getCode());
-//            System.out.println(getErrorCode(ResultCodeEnum.ES000007.code()));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
 }

@@ -115,7 +115,7 @@ public class AuthViewInterceptor implements HandlerInterceptor {
 			authResDtoByToken = tokenService.getAuthResDtoByToken(response, token);
 			//校验用户是否恶意攻击网站
 			//validateAndSettingValidateCode(request,response,authResDtoByToken.getUserId());
-			ThreadLocalMap.put(Constant.TOKEN_USER, authResDtoByToken.getLoginName());
+			ThreadLocalMap.put(Constant.TOKEN_USER, authResDtoByToken.getUserName());
 			ThreadLocalMap.put(Constant.TOKEN_AUTH_DTO, authResDtoByToken);
 			logger.debug("AuthViewInterceptor.preHandle - token={}", token);
 			logger.debug("AuthViewInterceptor.preHandle - authResDtoByToken={}", authResDtoByToken);

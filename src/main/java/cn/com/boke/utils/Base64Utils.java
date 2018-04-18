@@ -21,16 +21,16 @@ import java.io.OutputStream;
  * @create 2017-07-03 1:36
  **/
 public class Base64Utils {
-    static class BASE64Encoderer extends BASE64Encoder {
+    private static class Base64Encoderer extends BASE64Encoder {
 
     }
 
-    static class BASE64Dncoderer extends BASE64Decoder {
+    private static class Base64Dncoderer extends BASE64Decoder {
 
     }
 
     /**
-     * <p>Title:    .Encrypt</p>
+     * <p>Title:    .encrypt</p>
      * <p>Description 根据传入的字节数组进行Base64加密 </p>
      *
      * @param
@@ -38,13 +38,13 @@ public class Base64Utils {
      * @author 杨东旭
      * @CreateDate 2017/07/03
      */
-    public static String Encrypt(byte[] pic) {
-        BASE64Encoderer encoder = new BASE64Encoderer();
+    public static String encrypt(byte[] pic) {
+        Base64Encoderer encoder = new Base64Encoderer();
         return encoder.encode(pic);
     }
 
     /**
-     * <p>Title:    .Decrypt</p>
+     * <p>Title:    .decrypt</p>
      * <p>Description 根据传入的Bsdr64加密字符串进行Base64解密，并在对应的目录下输出（主要用于图片处理） </p>
      *
      * @param path,imagestr
@@ -52,14 +52,15 @@ public class Base64Utils {
      * @author 杨东旭
      * @CreateDate 2017/07/03
      */
-    public static void Decrypt(String path, String imagestr) {
-        BASE64Dncoderer decoder = new BASE64Dncoderer();
+    public static void decrypt(String path, String imagestr) {
+        Base64Dncoderer decoder = new Base64Dncoderer();
         try {
             // Base64解码
             byte[] bytes = decoder.decodeBuffer(imagestr);
             //开始输出
             for (int i = 0; i < bytes.length; ++i) {
-                if (bytes[i] < 0) {// 调整异常的数据
+                // 调整异常的数据
+                if (bytes[i] < 0) {
                     bytes[i] += 256;
                 }
             }
@@ -74,7 +75,7 @@ public class Base64Utils {
     }
 
     /**
-     * <p>Title:    .Decrypt</p>
+     * <p>Title:    .decrypt</p>
      * <p>Description 根据传入的字节数组，在对应的目录下输出（主要用于图片处理） </p>
      *
      * @param path,imagestr
@@ -82,8 +83,10 @@ public class Base64Utils {
      * @author 杨东旭
      * @CreateDate 2017/07/03
      */
-    public static void DecryptByByte(String path, byte[] data) {
-        if (data.length < 3 || path.equals("")) return;
+    public static void decryptByByte(String path, byte[] data) {
+        if (data.length < 3 || "".equals(path)) {
+            return;
+        }
         try {
             FileImageOutputStream imageOutput = new FileImageOutputStream(new File(path));
             //输出图片

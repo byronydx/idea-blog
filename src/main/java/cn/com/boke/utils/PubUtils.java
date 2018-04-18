@@ -421,7 +421,7 @@ public class PubUtils {
             return true;
         } else {
             for (String str : strs) {
-                if (str == null || str.trim().equals("")) {
+                if (str == null || "".equals(str.trim())) {
                     return true;
                 }
             }

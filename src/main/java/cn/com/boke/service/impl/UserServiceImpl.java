@@ -3,9 +3,14 @@ package cn.com.boke.service.impl;
 import cn.com.boke.domain.LoginTicket;
 import cn.com.boke.domain.User;
 import cn.com.boke.mapper.UserMapper;
+import cn.com.boke.model.constant.Constant;
+import cn.com.boke.model.dto.AuthResDto;
+import cn.com.boke.model.dto.AuthTokenDto;
 import cn.com.boke.service.LoginTicketService;
+import cn.com.boke.service.TokenService;
 import cn.com.boke.service.UserService;
 import cn.com.boke.utils.MD5Util;
+import cn.com.boke.utils.ThreadLocalMap;
 import cn.com.boke.utils.UuidUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +28,8 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
     @Resource
     private UserMapper userMapper;
     @Resource
+    private TokenService tokenService;
+    @Resource
     private LoginTicketService loginTicketService;
 
     //Token过期剩余时间,根据此变量设置续租
@@ -36,7 +43,9 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
     @Override
     public int save(User record) {
         record.setId(UuidUtil.getUuid());
-        if (StringUtils.isBlank(record.getRole())) record.setRole("user");
+        if (StringUtils.isBlank(record.getRole())) {
+            record.setRole("user");
+        }
         return super.save(record);
     }
 
@@ -67,20 +76,55 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
         loginTicket.setExpired(date);
         loginTicket.setStatus("0");
         loginTicketService.save(loginTicket);
-        /*String userToString;
-        DateTime nowDate = new DateTime();
-        DateTime laterDate = nowDate.plusMinutes(expiredMinutes);
-        String tokenKey = UuidUtil.getUuid();
-        try {
-            //userToString = JacksonUtil.toJson(user);
-            //将用户信息放入Token
-            //String ticket = Jwts.builder().setSubject(user.getName()).claim("User", userToString).setIssuedAt(nowDate.toDate()).setExpiration(laterDate.toDate()).signWith(SignatureAlgorithm.HS256, tokenKey).compact();
-            loginTicket.setTicket(ticket);
-            loginTicketService.save(loginTicket);
-            return ticket;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BusinessException("用户注册失败");
-        }*/
+    }
+
+    @Override
+    public User selectByNameAndPwd(String username, String password) {
+        String encodePwd = MD5Util.encode(this.selectSaltByName(username), password);
+        User user = new User();
+        user.setName(username);
+        user.setPassword(encodePwd);
+        return selectOne(user);
+    }
+
+    @Override
+    public AuthTokenDto login(String username, String password) {
+        AuthTokenDto authTokenDto = new AuthTokenDto();
+        // 登录成功,则把登录用户放入当前内存内
+        AuthResDto resDto = new AuthResDto();
+        User u = selectByNameAndPwd(username, password);
+        resDto.setUserName(username);
+        resDto.setUserId(u.getId());
+        // Token处理
+        String token = tokenService.encodeToken(resDto);
+        // 将登录信息放进ThreadLocalMap
+        ThreadLocalMap.put(Constant.JWT_VIEW_TOKEN, token);
+        authTokenDto.setAuthResDto(resDto);
+        authTokenDto.setNewToken(token);
+        return authTokenDto;
+    }
+
+    @Override
+    public String selectSaltByName(String name) {
+        User user = new User();
+        user.setName(name);
+        User u = selectOne(user);
+        if (u != null && StringUtils.isNotBlank(u.getSalt())) {
+            return u.getSalt();
+        } else {
+            return "";
+        }
+    }
+
+    @Override
+    public String selectPwdByName(String name) {
+        User user = new User();
+        user.setName(name);
+        User u = selectOne(user);
+        if (u != null && StringUtils.isNotBlank(u.getPassword())) {
+            return u.getPassword();
+        } else {
+            return "";
+        }
     }
 }

@@ -7,11 +7,21 @@ package cn.com.boke.web.controller.jump;/**
  */
 
 import cn.com.boke.domain.User;
+import cn.com.boke.model.dto.AuthResDto;
+import cn.com.boke.service.TokenService;
+import cn.com.boke.utils.PublicUtil;
+import cn.com.boke.web.controller.base.BaseController;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 跳转到登录页面
@@ -20,11 +30,61 @@ import org.springframework.web.servlet.ModelAndView;
  * @create 2018-04-15 18:36
  **/
 @RestController
-public class JumpLoginController {
+public class JumpLoginController extends BaseController {
+    @Resource
+    private TokenService tokenService;
 
+    @Value("${boke.cookie.passToken}")
+    private String passTokenKey;
+
+    /**
+     * 跳转到登录页面，如果已经登录过，直接跳转首页
+     * @param model
+     * @param request
+     * @param resp
+     * @return
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView tologin(Model model) {
+    public ModelAndView tologin(Model model, HttpServletRequest request, HttpServletResponse resp) {
+        logger.info("==>跳转到登录页面");
+        try {
+            String token = (String) request.getSession().getAttribute("token");
+            if (PublicUtil.isNotEmpty(token)) {
+                request.getSession().removeAttribute("token");
+                token = null;
+            }
+            Cookie[] cookies = request.getCookies();
+            if (PublicUtil.isNotEmpty(cookies)) {
+                for (Cookie cookie : cookies) {
+                    if (passTokenKey.equals(cookie.getName())) {
+                        token = cookie.getValue();
+                        break;
+                    }
+                }
+            }
+            // 如果token 不为空 解析token 如果解析token 成功 则跳转到首页
+            if (PublicUtil.isNotEmpty(token)) {
+                AuthResDto authResDto = tokenService.getAuthResDtoByToken(resp, token);
+                if (PublicUtil.isNotEmpty(authResDto)) {
+                    return new ModelAndView("service/index");
+                }
+            }
+        } catch (Exception e) {
+            logger.error("==>登录或获取session token fail");
+            model.addAttribute("user", new User());
+            return new ModelAndView("service/login");
+        }
         model.addAttribute("user", new User());
         return new ModelAndView("service/login");
+    }
+
+    /**
+     * 跳转首页
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public ModelAndView toRegister(Model model) {
+        return new ModelAndView("service/index");
     }
 }

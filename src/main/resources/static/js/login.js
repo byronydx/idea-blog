@@ -70,7 +70,35 @@ $(document).ready(function (e) {
 
 
     $("#login_a").click(function () {
-        $("#login_form").submit();
+        let param = {};
+        param.name = $("#in").val();
+        param.password = $("#pwd_in").val();
+        CommonClient.syncpost("/boke/user/login", param, function (result) {
+            if (result == undefined || result == null || result.code == null || result.code === "") {
+
+            } else if (result.code === 200) {
+                if (checkResult(result)) {
+                    layer.msg(result.message, {
+                        skin: 'layui-layer-molv',
+                        time: 1000,
+                        icon: 1
+                    });
+                    setTimeout(function () {
+                        window.location.href = "/index";
+                    }, 3 * 1000);
+                }
+            } else if (result.code === 403) {
+                alert("没有权限")
+            } else {
+                if (checkResult(result)) {
+                    layer.msg(result.message, {
+                        skin: 'layui-layer-molv',
+                        time: 1000,
+                        icon: 1
+                    });
+                }
+            }
+        });
     })
 
 

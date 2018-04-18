@@ -7,7 +7,7 @@ import java.util.Map;
 public class ThreadLocalMap {
 //	private static Logger logger = Logger.getLogger(ThreadLocalMap.class);
 
-	protected final static ThreadLocal<Map<String, Object>> threadContext = new MapThreadLocal();
+	protected final static ThreadLocal<Map<String, Object>> THREAD_CONTEXT = new MapThreadLocal();
 
 	private ThreadLocalMap() {
 	};
@@ -25,11 +25,13 @@ public class ThreadLocalMap {
 	}
 
 	private static class MapThreadLocal extends ThreadLocal<Map<String, Object>> {
+		@Override
 		protected Map<String, Object> initialValue() {
 			return new HashMap<String, Object>() {
 
 				private static final long serialVersionUID = 3637958959138295593L;
 
+				@Override
 				public Object put(String key, Object value) {
 //					if (logger.isDebugEnabled()) {
 //						if (containsKey(key)) {
@@ -51,7 +53,7 @@ public class ThreadLocalMap {
 	 * @return thread context Map的实例
 	 */
 	protected static Map<String, Object> getContextMap() {
-		return (Map<String, Object>) threadContext.get();
+		return (Map<String, Object>) THREAD_CONTEXT.get();
 	}
 
 	/**

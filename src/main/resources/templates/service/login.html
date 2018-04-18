@@ -10,6 +10,10 @@
 
 <script th:src="@{/js/jquery-2.1.4.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/common/common-client.js}"></script>
+<script th:src="@{/js/common/utils.js}"></script>
+<script th:src="@{/js/common/jquery.blockUI.js}"></script>
+<script th:src="@{/js/layui/layer/layer.js}"></script>
 <script th:src="@{/js/login.js}"></script>
 
 
@@ -24,8 +28,7 @@
 
 <style>
     body {
-        background-image: url(../img/background-img/0.jpg);
-        top center no-repeat;
+        background-image: url(../img/background-img/0.jpg), top, center, no-repeat;
         background-size: cover;
     }
 
@@ -66,7 +69,7 @@
         <div class="form-group" id="inner">
             <label>更改登录背景</label>
             <select style="width:120px;height:30px;color:#0CF; text-align:center" id="change_bg">
-                <option value=""></option>
+                <option value="0"></option>
                 <option value="0">恢复默认</option>
                 <option value="0">------------------</option>
                 <option value="1">星期一</option>
@@ -94,7 +97,7 @@
                         <div class="form-group has-feedback">
                             <span><strong>Username：</strong></span>
                             <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                            <input size="28" id="in" th:field="*{name}" required="" placeholder="账号/手机/邮箱"/>
+                            <input size="28" id="in" th:field="*{name}" required="" placeholder="账号"/>
                         </div>
                     </div>
                 </div>
@@ -134,10 +137,10 @@
             <div id="apart4"></div>
             <div id="login_area" style="border:1px solid #0CF;">
                 <div id="login_now">
-                    <div class="form-group" id="login_btn_father" style="color:#0CF;"><span><a href="#"
-                                                                                               style="text-decoration:none"
-                                                                                               id="login_a"
-                                                                                               class="login">登录</a></span>
+                    <div class="form-group" id="login_btn_father" style="color:#0CF;">
+                        <span>
+                            <a href="#" style="text-decoration:none" id="login_a" class="login">登录</a>
+                        </span>
                     </div>
                 </div>
             </div>

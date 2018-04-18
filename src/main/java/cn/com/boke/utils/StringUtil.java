@@ -207,7 +207,9 @@ public class StringUtil extends StringUtils {
      */
     public static boolean dtoIsNull(Object obj) throws Exception {
 
-        if (StringUtils.isEmpty(obj)) return true;
+        if (StringUtils.isEmpty(obj)) {
+            return true;
+        }
 
         for (Field f : obj.getClass().getDeclaredFields()) {
             f.setAccessible(true);

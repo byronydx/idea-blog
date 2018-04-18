@@ -18,6 +18,9 @@ import java.util.List;
 public class DateUtils {
 
     public enum DateFormatType {
+        /**
+         * 年月日 时分秒
+         */
         TYPE1("yyyy-MM-dd HH:mm:ss"),
         TYPE2("yyyy-MM-dd"),
         TYPE3("yyyyMMddHHmmss"),

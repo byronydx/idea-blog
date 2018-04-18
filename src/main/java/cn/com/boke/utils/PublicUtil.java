@@ -23,10 +23,12 @@ public class PublicUtil {
      */
     @SuppressWarnings("rawtypes")
     public static boolean isEmpty(Object pObj) {
-        if (pObj == null)
+        if (pObj == null) {
             return true;
-        if (pObj == "")
+        }
+        if (pObj == "") {
             return true;
+        }
         if (pObj instanceof String) {
             if (((String) pObj).length() == 0) {
                 return true;

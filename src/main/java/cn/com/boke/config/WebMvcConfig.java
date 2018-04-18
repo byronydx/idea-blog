@@ -63,7 +63,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         authViewInterceptor.setEnv(env);
         registry.addInterceptor(authViewInterceptor).addPathPatterns("/boke/**")
                 //添加排除在拦截器以外的url
-                .excludePathPatterns("/register", "/boke/user/register");
+                .excludePathPatterns("/register",
+                        "/boke/user/register",
+                        "/login",
+                        "/boke/user/login");
     }
 
 }

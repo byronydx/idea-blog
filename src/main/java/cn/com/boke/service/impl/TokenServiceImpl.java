@@ -104,7 +104,7 @@ public class TokenServiceImpl implements TokenService {
             DateTime nowDate = new DateTime();
             DateTime laterDate = nowDate.plusMinutes(expiredMinutes);
             String tokenKey = getViewPrivateKey();
-            token = Jwts.builder().setSubject(authResDto.getLoginName()).claim("authResDto", authResDtoString).setIssuedAt(nowDate.toDate()).setExpiration(laterDate.toDate()).signWith(SignatureAlgorithm.HS256, tokenKey).compact();
+            token = Jwts.builder().setSubject(authResDto.getUserName()).claim("authResDto", authResDtoString).setIssuedAt(nowDate.toDate()).setExpiration(laterDate.toDate()).signWith(SignatureAlgorithm.HS256, tokenKey).compact();
         } catch (Exception e) {
             logger.error("生成token, 出现异常={}", e.getMessage(), e);
             throw new BusinessException("生成token失败!");
@@ -140,7 +140,7 @@ public class TokenServiceImpl implements TokenService {
                 String newToken = this.encodeToken(authResDto);
                 resp.setHeader("newtoken", newToken);
                 // 设置cookie
-                CookieUtil.setCookie(passTokenKey, token, Constant.Cookie.XESCM_DOMAIN, Constant.Cookie.XESCM_PATH, resp);
+                CookieUtil.setCookie(passTokenKey, token, Constant.Cookie.DOMAIN, Constant.Cookie.PATH, resp);
             }
         } catch (Exception e) {
             logger.error("token解密失败 token={}", token);

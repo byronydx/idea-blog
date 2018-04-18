@@ -128,7 +128,7 @@ public abstract class BaseService<T> implements IService<T> {
         try {
             Class newClass = entity.getClass();
             Example myExample = new Example(newClass);
-            if (!PubUtils.trimAndNullAsEmpty(sort).equals("")) {
+            if (!"".equals(PubUtils.trimAndNullAsEmpty(sort))) {
                 myExample.setOrderByClause(sort);
             }
             Example.Criteria criteria = myExample.createCriteria();

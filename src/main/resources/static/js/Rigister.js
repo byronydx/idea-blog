@@ -196,24 +196,25 @@ $(document).ready(function (e) {
             pwd_conf = false;
         }
 
-        if (username == true && pwd_conf == true) {
+        if (username === true && pwd_conf === true) {
             let param = {};
             param.name = $("#username").val();
             param.password = $("#password").val();
             CommonClient.syncpost("/boke/user/register", param, function (result) {
-                debugger;
-                console.log(result);
-                if (result == undefined || result == null || result.code == null || result.code == "") {
+                if (result == undefined || result == null || result.code == null || result.code === "") {
 
-                } else if (result.code == 200) {
+                } else if (result.code === 200) {
                     if (checkResult(result)) {
                         layer.msg(result.message, {
                             skin: 'layui-layer-molv',
                             time: 1000,
                             icon: 1
                         });
+                        setTimeout(function () {
+                            window.location.href = "/login";
+                        }, 3 * 1000);
                     }
-                } else if (result.code == 403) {
+                } else if (result.code === 403) {
                     alert("没有权限")
                 } else {
                     if (checkResult(result)) {
