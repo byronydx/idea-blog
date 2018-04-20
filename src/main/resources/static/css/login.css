@@ -60,3 +60,6 @@ a:active{
 	text-decoration:none;
 	color:#C09;
 	}
+.login {
+	background:url(../img/background-img/0.jpg) top center no-repeat; background-size:cover;
+}

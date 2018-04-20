@@ -51,4 +51,13 @@ public class IpUtils {
         return ipAddress;
     }
 
+    /**
+     * 获取当前域名
+     * @param request
+     * @return
+     */
+    public static String getCurrentDomainName(HttpServletRequest request){
+        return request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
+    }
+
 }

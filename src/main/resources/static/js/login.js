@@ -63,8 +63,6 @@ $(document).ready(function (e) {
 
     <!-- 更改登录背景  start -->
     $("#change_bg").change(function () {
-        console.log($(this).val());
-        debugger;
         $("body").css("background-image", "url(../img/background-img/" + $(this).val() + ".jpg");
     })
 

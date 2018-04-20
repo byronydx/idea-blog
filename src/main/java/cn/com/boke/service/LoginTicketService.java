@@ -10,4 +10,6 @@ import cn.com.boke.domain.LoginTicket;
  * Tags: Code, we are serious.
  */
 public interface LoginTicketService extends IService<LoginTicket> {
+    LoginTicket selectByUserId(String userId);
+    int delayExpiredByUserId(int milliseconds,String userId);
 }

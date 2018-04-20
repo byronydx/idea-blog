@@ -97,6 +97,10 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
         resDto.setUserId(u.getId());
         // Token处理
         String token = tokenService.encodeToken(resDto);
+        LoginTicket loginTicket = loginTicketService.selectByUserId(u.getId());
+        loginTicket.setExpired(resDto.getExpired());
+        loginTicket.setTicket(token);
+        loginTicketService.update(loginTicket);
         // 将登录信息放进ThreadLocalMap
         ThreadLocalMap.put(Constant.JWT_VIEW_TOKEN, token);
         authTokenDto.setAuthResDto(resDto);

@@ -44,10 +44,8 @@ public class TokenServiceImpl implements TokenService {
     @Value("${auth.expiredMinutes}")
     private Integer expiredMinutes;
 
-    @Value("${xescm.cookie.passToken}")
+    @Value("${boke.cookie.passToken}")
     private String passTokenKey;
-    @Value("${xescm.cookie.userInfo}")
-    private String userInfo;
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
@@ -103,6 +101,7 @@ public class TokenServiceImpl implements TokenService {
             //将用户信息放入Token
             DateTime nowDate = new DateTime();
             DateTime laterDate = nowDate.plusMinutes(expiredMinutes);
+            authResDto.setExpired(laterDate.toDate());
             String tokenKey = getViewPrivateKey();
             token = Jwts.builder().setSubject(authResDto.getUserName()).claim("authResDto", authResDtoString).setIssuedAt(nowDate.toDate()).setExpiration(laterDate.toDate()).signWith(SignatureAlgorithm.HS256, tokenKey).compact();
         } catch (Exception e) {
@@ -132,9 +131,8 @@ public class TokenServiceImpl implements TokenService {
             String authResDtoString = (String) claims.get("authResDto");
             DateTime nowDate = new DateTime();
             DateTime expireDate = new DateTime(expiration);
-
             authResDto = JacksonUtil.parseJson(authResDtoString, AuthResDto.class);
-
+            authResDto.setExpired(expiration);
             if (nowDate.plusMinutes(expiredRemainMinutes).isAfter(expireDate)) {
                 //如果当前时间到过期时间小于20分钟,则需要续租
                 String newToken = this.encodeToken(authResDto);

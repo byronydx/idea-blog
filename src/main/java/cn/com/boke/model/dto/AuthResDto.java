@@ -1,8 +1,11 @@
 package cn.com.boke.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>Title:	  AuthResDto. </p>
@@ -29,4 +32,10 @@ public class AuthResDto implements Serializable {
      * 用户名
      */
     private String userName;
+    /**
+     * 过期时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date expired;
 }

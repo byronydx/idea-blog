@@ -7,8 +7,10 @@ package cn.com.boke.web.controller.jump;/**
  */
 
 import cn.com.boke.domain.User;
+import cn.com.boke.model.constant.Constant;
 import cn.com.boke.model.dto.AuthResDto;
 import cn.com.boke.service.TokenService;
+import cn.com.boke.utils.CookieUtil;
 import cn.com.boke.utils.PublicUtil;
 import cn.com.boke.web.controller.base.BaseController;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,6 +41,7 @@ public class JumpLoginController extends BaseController {
 
     /**
      * 跳转到登录页面，如果已经登录过，直接跳转首页
+     *
      * @param model
      * @param request
      * @param resp
@@ -80,11 +83,34 @@ public class JumpLoginController extends BaseController {
 
     /**
      * 跳转首页
+     *
      * @param model
      * @return
      */
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView toRegister(Model model) {
         return new ModelAndView("service/index");
+    }
+
+    /**
+     * 登出系统
+     *
+     * @param resp
+     * @param request
+     * @param model
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public ModelAndView logout(HttpServletResponse resp, HttpServletRequest request, Model model) throws Exception {
+        try {
+            // 清除passTokenKey
+            CookieUtil.clearCookie(passTokenKey, Constant.Cookie.DOMAIN, Constant.Cookie.PATH, resp);
+        } catch (Exception e) {
+            logger.error("logout - 登出, 出现异常={}", e.getMessage());
+        }
+        logger.error("登出成功");
+        model.addAttribute("user", new User());
+        return new ModelAndView("service/login");
     }
 }

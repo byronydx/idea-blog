@@ -61,11 +61,13 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         // excludePathPatterns 用户排除拦截
         super.addInterceptors(registry);
         authViewInterceptor.setEnv(env);
-        registry.addInterceptor(authViewInterceptor).addPathPatterns("/boke/**")
+        registry.addInterceptor(authViewInterceptor).addPathPatterns("/boke/**","/*")
                 //添加排除在拦截器以外的url
                 .excludePathPatterns("/register",
                         "/boke/user/register",
                         "/login",
+                        "/logout",
+                        "/error",
                         "/boke/user/login");
     }
 
