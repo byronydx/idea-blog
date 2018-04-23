@@ -8,6 +8,49 @@ $(document).ready(function (e) {
     var e = 2.718281828459;
     var dd_margin_left = 0.0955;
 
+    /*将登录div设置为可随鼠标自由移动*/
+    var posX;
+    var posY;
+    fwuss = document.getElementById("login_div");
+    fwuss.onmousedown = function (e) {
+        e = e || window.event;
+        posX = e.x - fwuss.offsetLeft;//获得横坐标x
+        posY = e.y - fwuss.offsetTop;//获得纵坐标y
+        document.onmousemove = mousemove;//调用函数，只要一直按着按钮就能一直调用
+    }
+    document.onmouseup = function () {
+        document.onmousemove = null;//鼠标举起，停止
+    }
+
+    function mousemove(ev) {
+        if (ev == null) ev = window.event;//IE
+        fwuss.style.left = (ev.clientX - posX) + "px";
+        fwuss.style.top = (ev.clientY - posY) + "px";
+    }
+
+    /*body的背景图片随着日期变化*/
+    let date = '日一二三四五六'.charAt(new Date().getDay());
+    let dateStr = '0';
+    switch (date) {
+        case '一':
+            dateStr = '1';
+            break;
+        case '二':
+            dateStr = '2';
+            break;
+        case '三':
+            dateStr = '3';
+            break;
+        case '四':
+            dateStr = '4';
+            break;
+        case '五':
+            dateStr = '5';
+            break;
+        default:
+            dateStr = '0';
+    }
+    $("body").css("background-image", "url(../img/background-img/" + dateStr + ".jpg");
 
     <!--   用户登录   start -->
     $("#login").css("width", "350px").css("height", "470px").css("top", 1 / 2 * (height - 500) + "px").css("left", 1 / 2 * (width - 350) + "px");

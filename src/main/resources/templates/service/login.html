@@ -27,8 +27,8 @@
 
 
 <style>
-    .login {
-        background:url(/static/img/background-img/0.jpg) top center no-repeat; background-size:cover;
+    body {
+        background-size: cover;
     }
 
     #main {
@@ -59,7 +59,7 @@
     <meta charset="UTF-8"/>
     <title>login</title>
 </head>
-<body class="login">
+<body>
 <div id="main">
     <input id="register_in" type="hidden" th:value="${register_success}"/>
 
@@ -69,7 +69,7 @@
             <label>更改登录背景</label>
             <select style="width:120px;height:30px;color:#0CF; text-align:center" id="change_bg">
                 <option value="0"></option>
-                <option value="0" selected="selected">恢复默认</option>
+                <option value="0">恢复默认</option>
                 <option value="0">------------------</option>
                 <option value="1">星期一</option>
                 <option value="2">星期二</option>
@@ -158,9 +158,6 @@
 
 </div>
 <script type="text/javascript">
-    window.onload = function(){
-        $("body").css("background-image", "url(.../static/img/background-img/" +  "0.jpg");
-    }
 </script>
 </body>
 </html>
