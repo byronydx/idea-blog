@@ -25,7 +25,7 @@ public class MyBatisConfig {
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
-    public org.apache.tomcat.jdbc.pool.DataSource dataSource() {
+    org.apache.tomcat.jdbc.pool.DataSource dataSource() {
         return new org.apache.tomcat.jdbc.pool.DataSource();
     }
 
