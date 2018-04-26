@@ -200,7 +200,7 @@ $(document).ready(function (e) {
             let param = {};
             param.name = $("#username").val();
             param.password = $("#password").val();
-            CommonClient.syncpost("/boke/user/register", param, function (result) {
+            CommonClient.syncpost("/blog/user/register", param, function (result) {
                 if (result == undefined || result == null || result.code == null || result.code === "") {
 
                 } else if (result.code === 200) {

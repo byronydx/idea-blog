@@ -114,7 +114,7 @@ $(document).ready(function (e) {
         let param = {};
         param.name = $("#in").val();
         param.password = $("#pwd_in").val();
-        CommonClient.syncpost("/boke/user/login", param, function (result) {
+        CommonClient.syncpost("/blog/user/login", param, function (result) {
             if (result == undefined || result == null || result.code == null || result.code === "") {
 
             } else if (result.code === 200) {
