@@ -39,6 +39,12 @@ public class JumpLoginController extends BaseController {
     @Value("${boke.cookie.passToken}")
     private String passTokenKey;
 
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ModelAndView defaultTo(Model model) {
+        model.addAttribute("user", new User());
+        return new ModelAndView("service/login");
+    }
+
     /**
      * 跳转到登录页面，如果已经登录过，直接跳转首页
      *

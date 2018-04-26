@@ -66,6 +66,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/register",
                         "/boke/user/register",
                         "/login",
+                        "/",
                         "/logout",
                         "/error",
                         "/boke/user/login");

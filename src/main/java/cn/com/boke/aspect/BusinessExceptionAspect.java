@@ -8,6 +8,10 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by IntelliJ IDEA.
@@ -48,5 +52,7 @@ public class BusinessExceptionAspect {
             logger.error("==>" + exception.fillInStackTrace());
             logger.error("==> 堆栈信息{}", exception.toString(), exception);
         }
+        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+        response.reset();
     }
 }
