@@ -1,10 +1,12 @@
 package cn.com.blog.domain;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
+@Builder
 public class User {
     /**
      * ID

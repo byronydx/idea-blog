@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class JumpRegisterController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView toRegister(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", User.builder().build());
         return new ModelAndView("service/register");
     }
 }

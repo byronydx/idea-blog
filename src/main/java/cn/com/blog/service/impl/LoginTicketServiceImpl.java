@@ -21,9 +21,7 @@ public class LoginTicketServiceImpl extends BaseService<LoginTicket> implements 
 
     @Override
     public LoginTicket selectByUserId(String userId) {
-        LoginTicket loginTicket = new LoginTicket();
-        loginTicket.setUserId(userId);
-        return selectOne(loginTicket);
+        return selectOne(LoginTicket.builder().userId(userId).build());
     }
 
     @Override

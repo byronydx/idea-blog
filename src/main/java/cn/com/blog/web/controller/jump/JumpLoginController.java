@@ -41,7 +41,7 @@ public class JumpLoginController extends BaseController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView defaultTo(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", User.builder().build());
         return new ModelAndView("service/login");
     }
 
@@ -80,10 +80,10 @@ public class JumpLoginController extends BaseController {
             }
         } catch (Exception e) {
             logger.error("==>登录或获取session token fail");
-            model.addAttribute("user", new User());
+            model.addAttribute("user", User.builder().build());
             return new ModelAndView("service/login");
         }
-        model.addAttribute("user", new User());
+        model.addAttribute("user", User.builder().build());
         return new ModelAndView("service/login");
     }
 
@@ -116,7 +116,7 @@ public class JumpLoginController extends BaseController {
             logger.error("logout - 登出, 出现异常={}", e.getMessage());
         }
         logger.error("登出成功");
-        model.addAttribute("user", new User());
+        model.addAttribute("user", User.builder().build());
         return new ModelAndView("service/login");
     }
 }

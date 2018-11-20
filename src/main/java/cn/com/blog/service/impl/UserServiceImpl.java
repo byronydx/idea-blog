@@ -51,40 +51,33 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 
     @Override
     public User selectByName(String name) {
-        User user = new User();
-        user.setName(name);
-        return selectOne(user);
+        return selectOne(User.builder().name(name).build());
     }
 
     @Override
     @Transactional
     public void register(String username, String password) {
-        User user = new User();
-        user.setName(username);
-        user.setSalt(UuidUtil.getUuid().toString().substring(0, 5));
         //user.setHeadUrl(String.format("https://images.nowcoder.com/head/%dm.png",random.nextInt(1000)));
-        user.setPassword(MD5Util.encode(user.getSalt(), password));
+        String salt = UuidUtil.getUuid().toString().substring(0, 5);
+        User user = User.builder()
+                .name(username)
+                .salt(salt)
+                .password(MD5Util.encode(salt, password)).build();
         save(user);
         addLoginTicket(user);
     }
 
     public void addLoginTicket(User user) {
-        LoginTicket loginTicket = new LoginTicket();
-        loginTicket.setUserId(user.getId());
         Date date = new Date();
         date.setTime(date.getTime() + 1000 * 3600 * 30);
-        loginTicket.setExpired(date);
-        loginTicket.setStatus("0");
-        loginTicketService.save(loginTicket);
+        loginTicketService.save(LoginTicket.builder()
+                .userId(user.getId()).expired(date).status("0").build());
     }
 
     @Override
     public User selectByNameAndPwd(String username, String password) {
         String encodePwd = MD5Util.encode(this.selectSaltByName(username), password);
-        User user = new User();
-        user.setName(username);
-        user.setPassword(encodePwd);
-        return selectOne(user);
+        return selectOne(User.builder().name(username).password(encodePwd).build());
     }
 
     @Override
@@ -110,9 +103,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 
     @Override
     public String selectSaltByName(String name) {
-        User user = new User();
-        user.setName(name);
-        User u = selectOne(user);
+        User u = selectOne(User.builder().name(name).build());
         if (u != null && StringUtils.isNotBlank(u.getSalt())) {
             return u.getSalt();
         } else {
@@ -122,9 +113,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 
     @Override
     public String selectPwdByName(String name) {
-        User user = new User();
-        user.setName(name);
-        User u = selectOne(user);
+        User u = selectOne(User.builder().name(name).build());
         if (u != null && StringUtils.isNotBlank(u.getPassword())) {
             return u.getPassword();
         } else {

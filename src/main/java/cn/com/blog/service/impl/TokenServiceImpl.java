@@ -12,9 +12,8 @@ import cn.com.blog.wrap.Wrapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -31,10 +30,9 @@ import java.util.Date;
  * @Author wangsongtao
  * @CreateDate 2016/11/27 14:18
  */
+@Slf4j
 @Service
 public class TokenServiceImpl implements TokenService {
-
-    private static Logger logger = LoggerFactory.getLogger(TokenServiceImpl.class);
 
     //Token过期剩余时间,根据此变量设置续租
     @Value("${auth.expiredRemainMinutes}")
@@ -84,7 +82,7 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public void setTokenKey(String tokenKey) {
         if (PubUtils.isNull(tokenKey)) {
-            logger.error("tokenKey is null");
+            log.error("tokenKey is null");
             throw new BusinessException("tokenKey 为空");
         }
         ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
@@ -94,7 +92,7 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public String encodeToken(AuthResDto authResDto) {
-        logger.error("encodeToken - 生成token. authResDto={}", authResDto);
+        log.error("encodeToken - 生成token. authResDto={}", authResDto);
         String token;
         try {
             String authResDtoString = JacksonUtil.toJson(authResDto);
@@ -105,10 +103,10 @@ public class TokenServiceImpl implements TokenService {
             String tokenKey = getViewPrivateKey();
             token = Jwts.builder().setSubject(authResDto.getUserName()).claim("authResDto", authResDtoString).setIssuedAt(nowDate.toDate()).setExpiration(laterDate.toDate()).signWith(SignatureAlgorithm.HS256, tokenKey).compact();
         } catch (Exception e) {
-            logger.error("生成token, 出现异常={}", e.getMessage(), e);
+            log.error("生成token, 出现异常={}", e.getMessage(), e);
             throw new BusinessException("生成token失败!");
         }
-        logger.error("encodeToken - 生成token. authResDto={}, [OK]", authResDto);
+        log.error("encodeToken - 生成token. authResDto={}, [OK]", authResDto);
         return token;
     }
 
@@ -141,8 +139,8 @@ public class TokenServiceImpl implements TokenService {
                 CookieUtil.setCookie(passTokenKey, token, Constant.Cookie.DOMAIN, Constant.Cookie.PATH, resp);
             }
         } catch (Exception e) {
-            logger.error("token解密失败 token={}", token);
-            logger.error("token解密失败={} ", e.getMessage(), e);
+            log.error("token解密失败 token={}", token);
+            log.error("token解密失败={} ", e.getMessage(), e);
             throw new BusinessException(ResultCodeEnum.ES000006.code(), ResultCodeEnum.ES000006.msg());
         }
         return authResDto;
@@ -170,8 +168,8 @@ public class TokenServiceImpl implements TokenService {
             authTokenDto.setNewToken(newToken);
             authTokenDto.setAuthResDto(authResDto);
         } catch (Exception e) {
-            logger.error("token解密失败 token={}", token);
-            logger.error("token解密失败={} ", e.getMessage(), e);
+            log.error("token解密失败 token={}", token);
+            log.error("token解密失败={} ", e.getMessage(), e);
             throw new BusinessException(ResultCodeEnum.ES000006.code(), ResultCodeEnum.ES000006.msg());
         }
         return authTokenDto;
@@ -193,16 +191,16 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public Wrapper<String> getSecToken() {
-        logger.info("EDAS获取登录加密秘钥...");
+        log.info("EDAS获取登录加密秘钥...");
         String secToken;
         try {
             secToken = RandomUtil.createComplexCode(16);
-            logger.info("EDAS获取登录加密秘钥,成功 secToken = {}", secToken);
+            log.info("EDAS获取登录加密秘钥,成功 secToken = {}", secToken);
         } catch (BusinessException ex) {
-            logger.error("EDAS获取登录加密秘钥, 出现异常={}", ex.getMessage(), ex);
+            log.error("EDAS获取登录加密秘钥, 出现异常={}", ex.getMessage(), ex);
             return WrapMapper.wrap(ResultCodeEnum.getErrorCode(ex.getCode()), ex.getMessage());
         } catch (Exception ex) {
-            logger.error("EDAS获取登录加密秘钥, 出现异常={}", ex.getMessage(), ex);
+            log.error("EDAS获取登录加密秘钥, 出现异常={}", ex.getMessage(), ex);
             return WrapMapper.error();
         }
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, "获取秘钥成功", secToken);
